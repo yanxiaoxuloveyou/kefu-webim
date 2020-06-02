@@ -169,6 +169,7 @@ function _sendSatisfaction(score, content, session, invite, appraiseTags, resolu
 function _setSatisfaction(){
 	apiHelper.getEvaluationDegrees().then(function(entities){
 		var labelID;
+		var lastScore;
 		starsUl.innerHTML = _.chain(entities)
 		.sortBy("level")
 		.map(function(elem, index){
@@ -179,7 +180,8 @@ function _setSatisfaction(){
 			var score = elem.score;
 			var isSingleTag = elem.isSingleTag;
 			labelID = id;
-
+			lastScore = score;
+			
 			return "<li data-level=\"" + level
 				+ "\" title=\"" + name
 				+ "\" data-evaluate-id=\"" + id
