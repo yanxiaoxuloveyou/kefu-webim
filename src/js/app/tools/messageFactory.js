@@ -10,6 +10,11 @@ var LOADING = Modernizr.inlinesvg ? _const.loadingSvg : "<img src=\"//kefu.easem
 
 // channel.js 放着消息列表的构建，是不对的
 function genMsgContent(msg){
+	var replace_download = function(){
+		console.log(123)
+		// window.location.href = url;
+	}
+	
 	var type = msg.type;
 	var value = msg.data;
 	var laiye = msg.laiye;
@@ -85,21 +90,45 @@ function genMsgContent(msg){
 
 
 	case "file":
+		var replace_download = function(){
+			console.log(123)
+			// window.location.href = url;
+		}
+		
 		// 历史会话中 filesize = 0
 		// 访客端发文件消息 filesize = undefined
 		// 需要过滤这两种情况，暂时只显示坐席发过来的文件大小
+
+		// html = "<i class=\"icon-attachment container-icon-attachment\"></i>"
+		// 	+ "<span class=\"file-info\">"
+		// 	+ "<p class=\"filename\">" + msg.filename + "</p>"
+		// 	+ "<p class=\"filesize\">" + utils.filesizeFormat(msg.fileLength) + "</p>"
+		// 	+ "</span>"
+		// 	+ "<a target=\"_blank\" href=\"" + msg.url
+		// 	+ "\" class=\"icon-download container-icon-download\" title=\""
+		// 	+ msg.filename + "\" download=\"" + msg.filename + "\"></a>";
+		// break;
+		// 替换原来的下载方式
 		html = "<i class=\"icon-attachment container-icon-attachment\"></i>"
 			+ "<span class=\"file-info\">"
 			+ "<p class=\"filename\">" + msg.filename + "</p>"
 			+ "<p class=\"filesize\">" + utils.filesizeFormat(msg.fileLength) + "</p>"
 			+ "</span>"
-			+ "<a target=\"_blank\" href=\"" + msg.url
-			+ "\" class=\"icon-download container-icon-download\" title=\""
+			+ "<a  href=\"javascript:;"  + "\"   hrefreplace=\"" + msg.url
+			+ "\" class=\"icon-download container-icon-download replace_download\" title=\""
 			+ msg.filename + "\" download=\"" + msg.filename + "\"></a>";
 		break;
+
 		// 小视频类型
 	case "video":
-		html = "<video class=\"video-btn\"  controls src=\"" + msg.url + " \">"
+		// html = "<video class=\"video-btn\"  controls src=\"" + msg.url + " \">"
+		// 		+ "<source  src=\"" + msg.url + " \" type=\"video/mp4\"></source>"
+		// 		+ "<source  src=\"" + msg.url + " \" type=\"video/webm\"></source>"
+		// 		+ "<source  src=\"" + msg.url + " \" type=\"video/ogg\"></source>"
+		// 	   + "</video>";
+		// break;
+		// 增加preload属性
+		html = "<video class=\"video-btn\" preload=\"auto\"  controls src=\"" + msg.url + " \">"
 				+ "<source  src=\"" + msg.url + " \" type=\"video/mp4\"></source>"
 				+ "<source  src=\"" + msg.url + " \" type=\"video/webm\"></source>"
 				+ "<source  src=\"" + msg.url + " \" type=\"video/ogg\"></source>"
@@ -139,9 +168,11 @@ function genMsgContent(msg){
 		relatedRuleIds = relatedRules.relatedRuleIds;
 		html += "<div class=\"em-btn-list\">" + _.map(msg.ext.relatedRules.questions, function(question, index){ return "<button class=\"js_robotRelateListbtn bg-hover-color\" data-ruleId=" + ruleId + " data-answerId=" + answerId + " data-relatedRuleId=" + relatedRuleIds[index] + ">" + question + "</button>";}).join("") || "";
 	}
-
+	
 	return html;
 }
+
+
 
 function _getAvatar(msg){
 	var officialAccountType = utils.getDataByPath(msg, "ext.weichat.official_account.type");
@@ -304,11 +335,16 @@ function genDomFromMsg(msg, isReceived, isHistory){
 		if(msg.multipleMsgOneByOne && msg.list){
 			html += msg.list;
 		}
+		
 	}
 
 
 	// container 结束
 	html += "</div>";
+	// $(".em-widget-msg-file>.replace_download").bind("click",function(){
+	// 	console.log(12345678)
+	// 	return false
+	// });
 
 	// 单独的转人工按钮（txt、）
 	if(!utils.getDataByPath(msg, "ext.msgtype.choice") && utils.getDataByPath(msg, "ext.weichat.ctrlType") === "TransferToKfHint"){
@@ -345,9 +381,17 @@ function genDomFromMsg(msg, isReceived, isHistory){
 
 	// wrapper 结尾
 	html += "</div>";
-
+	
 	dom.innerHTML = html;
+	$(".em-widget-msg-file>.replace_download").bind("click",function(){
+		// console.log(this[0])
+		// var elements = this
+		// console.log(elements)
+		var srcList = $(".em-widget-msg-file>.replace_download").attr("hrefreplace")
+		window.location.href = srcList
+	});
 	return dom;
+	
 }
 
 function isJsonString(str){
@@ -361,4 +405,9 @@ function isJsonString(str){
 	return false;
 }
 
+
+function replace_download(){
+	console.log(123)
+	// window.location.href = url;
+}
 module.exports = genDomFromMsg;
