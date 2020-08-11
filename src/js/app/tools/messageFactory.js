@@ -6,11 +6,13 @@ var textParser = require("./textParser");
 var moment = require("moment");
 var apiHelper = require("../pages/main/apis");
 
+var imgFrame =			require("@/common/uikit/imgFrame/ImageFrame");
 var LOADING = Modernizr.inlinesvg ? _const.loadingSvg : "<img src=\"//kefu.easemob.com__WEBIM_SLASH_KEY_PATH__/webim/static/img/loading.gif\" width=\"20\" style=\"margin-top:10px;\"/>";
 
 // channel.js 放着消息列表的构建，是不对的
 function genMsgContent(msg){
-	// console.log(msg)
+	console.log("获取")
+	console.log(msg)
 	var type = msg.type;
 	var value = msg.data;
 	var laiye = msg.laiye;
@@ -52,8 +54,10 @@ function genMsgContent(msg){
 		break;
 	case "img":
 		// todo: remove a
-		html = "<a href=\"javascript:;\"><img class=\"em-widget-imgview\" src=\""
-			+ msg.url + "\"/></a>";
+		// html = "<a href=\"javascript:;\"><img class=\"em-widget-imgview\" src=\""
+		// 	+ msg.url + "\"/></a>";
+		html = "<div class=\"img-frame\"><img  class=\"em-widget-imgview\" src=\""
+			+ msg.url + "\"/></div>";
 		break;
 	case "customMagicEmoji":
 		// 给图片消息或附件消息的url拼上hostname
@@ -176,6 +180,9 @@ function _getRulaiHtml(content){
 }
 
 function genDomFromMsg(msg, isReceived, isHistory){
+	debugger
+	console.log("消息记录")
+	console.log(msg)
 	// console.log(msg)
 	var id = msg.id;
 	var type = msg.type;
@@ -184,6 +191,7 @@ function genDomFromMsg(msg, isReceived, isHistory){
 	var direction = isReceived ? "left" : "right";
 
 	if(type === "article"){
+		debugger
 		var msgArticles = utils.getDataByPath(msg, "ext.msgtype.articles");
 		var articleNode;
 		if(msgArticles.length === 1){
@@ -369,6 +377,14 @@ function genDomFromMsg(msg, isReceived, isHistory){
 	html += "</div>";
 
 	dom.innerHTML = html;
+	$(".img-frame>img").bind("click",function(e){
+		var src = $(e.target).attr("src");
+		if(src){
+			imgFrame.show(src);
+			// this.popupMgr.start(imgFrame);
+		}
+		return false;
+	});
 	return dom;
 }
 
