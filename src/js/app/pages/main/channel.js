@@ -135,6 +135,7 @@ function _initConnection(onReadyCallback){
 			_handleMessage(message, { type: "video" });
 		}, // 新增小视频类型
 		onCmdMessage: function(message){
+			// console.log(message)
 			_handleMessage(message, { type: "cmd" });
 		},
 		onOnline: function(){
@@ -588,8 +589,15 @@ function extractMessage(invalid,type,msg,isHistory,
 	
 	
 		case "satisfactionEvaluation":
-			var isInvalid = new Date().getTime() - msg.timestamp
-			if(invalid*1000 > isInvalid){
+			var curtime;
+			if(msg.timestamp){
+				curtime = msg.timestamp
+			}
+			else{
+				curtime = new Date().getTime()
+			}
+			var isInvalid = new Date().getTime() - curtime;
+			if(Number(invalid)*1000 > isInvalid){
 				inviteId = msg.ext.weichat.ctrlArgs.inviteId;
 				serviceSessionId = msg.ext.weichat.ctrlArgs.serviceSessionId;
 				message = msg;
