@@ -167,9 +167,10 @@ utils.on(confirmBtn, "click", function(){
 	else if(overseasTest()){
 		uikit.tip(__("ticket.invalid_phone"));
 	}
-	else if(!checkEmail()){
-		uikit.tip(__("ticket.invalid_email"));
-	}
+	// else if(!checkEmail()){
+	// 	console.log("邮箱")
+	// 	uikit.tip(__("ticket.invalid_email"));
+	// }
 	else if(!content.value || content.value.length > 1500){
 		uikit.tip(__("ticket.invalid_content"));
 	}
