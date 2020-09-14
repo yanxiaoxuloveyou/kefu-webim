@@ -590,7 +590,6 @@ function extractMessage(invalid,type,msg,isHistory,
 		case "satisfactionEvaluation":
 			var time;
 			var closeArrDate = JSON.parse(utils.getStore("closDate")) 
-			console.log(closeArrDate)
 			serviceSessionId = msg.ext.weichat.ctrlArgs.serviceSessionId;
 			var closid = [];
 			// 处理历史消息
@@ -609,7 +608,6 @@ function extractMessage(invalid,type,msg,isHistory,
 			if(closid.indexOf(serviceSessionId) < 0){
 				time = new Date().getTime()
 			}
-			console.log(serviceSessionId)
 			var isInvalid = new Date().getTime() - time;
 			if(invalid*1000 > isInvalid){
 				inviteId = msg.ext.weichat.ctrlArgs.inviteId;

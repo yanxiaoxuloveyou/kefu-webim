@@ -86,6 +86,27 @@
 	}
 }
 
+.easemob-copyright{
+	// position: absolute;
+	top: 10px;
+	text-align: center;
+	width: 100%;
+	margin-top: 10px;
+	>a{
+		// background-color: #c9ced3;
+		border-radius: 4px;
+		padding: 1px 3px;
+		color: #666;
+		text-decoration: none;
+		margin-right: 16px;
+		>span{
+			>span{
+				font-weight: bold;
+			}
+		}
+	}
+}
+
 .em-widget-left,
 .em-widget-right {
 	float: left;
