@@ -1061,7 +1061,7 @@ function _init(){
         // utils.addClass(el, "paddingTo48");
         // utils.addClass(noMoreMsg, "top34");
         url = "http://www.easemob.com/product/cs?utm_source=csw&tenantid=" + commonConfig.getConfig().tenantId;
-        utils.appendHTMLTo(editorView, "<div class=\"easemob-copyright\"><a target=\"_blank\" href=" + url + "><span><i class=\"icon-easemob\"></i>环信提供技术支持</a></div>");
+        utils.appendHTMLTo(editorView, "<div class=\"easemob-copyright\"><a target=\"_blank\" href=" + url + "><span><i class=\"icon-easemob\"></i>"+ __("chat.powered_by_easemob") +"</a></div>");
     }
 	
 }
