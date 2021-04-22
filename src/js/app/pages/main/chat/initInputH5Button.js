@@ -12,7 +12,6 @@ var toKefuBtn;
 
 module.exports = function(data,isShowSatis){
 	// $(".em-widget-send-wrapper-top").addClass("hide")
-	console.log("加载H5 Btn")
 	// 获取按钮数量渲染按钮
 	var H5ButtonBox = document.querySelector(".toolbar-mobile>.swiper-wrapper");
 	// 获取原来容器中button的数量
@@ -103,25 +102,19 @@ module.exports = function(data,isShowSatis){
 	
 		switch(type){
 		case "linkH5":
-			console.log("调换链接")
 			window.open(content)
 			break;
 		case "popWindow":
-			console.log("弹窗")
-			console.log(content)
 			$(popWindow).removeClass("hide");
 			$(iframe).attr("src",content)
 			break;
 		case "photo":
-			console.log("照片")
 			utils.trigger(sendImgBtn, "click");
 			break;
 		case "video":
-			console.log("视频")
 			utils.trigger(sendVideoBtn, "click");
 			break;
 		case "evaluateH5":
-			console.log("邀请按钮")
 			utils.trigger(satisfaction, "click");
 			break;
 		default:
