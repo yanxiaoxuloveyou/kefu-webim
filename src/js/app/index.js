@@ -441,6 +441,7 @@ function renderUI(resultStatus){
 	}
 
 	apiHelper.getTheme().then(function(themeName){
+		console.log(themeName,"获取主题")
 		var color;
 		var className;
 		if(themeName && themeName.indexOf("theme_custom") > -1){ 
