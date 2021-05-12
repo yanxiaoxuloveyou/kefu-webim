@@ -2,7 +2,7 @@ var _const = require("@/common/const");
 var utils = require("@/common/utils");
 var profile = require("@/app/tools/profile");
 var eventListener = require("@/app/tools/eventListener");
-// var apiHelper = require("../apis");
+var apiHelper = require("../apis");
 var channel = require("../channel");
 var commonConfig = require("@/common/config");
 
@@ -198,6 +198,16 @@ module.exports = function(data,isOpen){
 	}
 	// $(topButtonBox).addClass(themeClassName);
 	// topButtonBox.addClass(themeClassName)
+	utils.on(document.querySelector(".em-widget-out-of-line"), "click", function(e){
+		console.log("访客退队")
+		var officialAccount = profile.currentOfficialAccount;
+		if(!officialAccount){
+			return;
+		}
+		var isSessionOpen = officialAccount.isSessionOpen;
+		var sessionId = officialAccount.sessionId;
+		isSessionOpen && apiHelper.closeServiceSession(sessionId);
+	})
 
 };
 
